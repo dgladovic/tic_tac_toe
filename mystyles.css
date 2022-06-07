@@ -1,0 +1,34 @@
+*{
+    border: solid red 1px;    
+}
+
+.border{
+    background-color: black;
+    margin: auto;
+    width: 800px;
+    height: 800px;
+    padding: 0px;
+    border: 0px;
+}
+
+.gamefield{
+
+    margin: auto;
+    width: 800px;
+    height: 800px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+    border: solid black;
+    gap: 15px;
+
+}
+
+.field{
+    background-color: white;
+    display: flex;
+    padding-top: 40px;
+    font-size: 9em;
+    justify-content: center;
+}
