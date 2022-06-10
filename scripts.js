@@ -1,6 +1,8 @@
 const render = (() => {
-    
+
+    const anounce = document.querySelector('.announcement');
     const new_gam = document.getElementById('new');
+
     new_gam.addEventListener('click',() => render.clear());
 
     const Gameboard = {
@@ -12,6 +14,8 @@ const render = (() => {
         Gameboard.gameboard.forEach( (e,i) => {
             let curr_field = document.getElementById(`${i}`);
             curr_field.textContent = " ";
+            anounce.style.visibility = 'hidden';
+            anounce.style.display = 'none';
         });
     }
 
@@ -37,6 +41,7 @@ const render = (() => {
     };
 
     const winner = (symb) => {   
+        console.log(anounce)
         const win_combos = {    //sve kombinacije za pobedu
             0: [0,1,2],
             1: [0,4,8],
@@ -61,7 +66,7 @@ const render = (() => {
         const pozicija = getAllIndexes();   //kupimo vrednosti funkcije za pozicije simbola
         let rezultat = '';
         
-        for(let key in win_combos){         //prolazi kroz svaku komubinaciju, ukoliko je dobra kaze rezultat
+        for(let key in win_combos){         //prolazi kroz svaku kombinaciju, ukoliko je dobra kaze rezultat
             let a = 0;
             if (rezultat == "Pobeda"){
                 break;
@@ -71,6 +76,8 @@ const render = (() => {
                     a += 1;
                     if(a == 3){
                         rezultat = "Pobeda";
+                        anounce.style.visibility = 'visible';
+                        anounce.style.display = 'block';
                         break;
                     }
                     else{
@@ -96,4 +103,7 @@ render.fieldcontent();
 render.logic(John.symbol);
 const flegma = render.winner('X');
 console.log(flegma);
+
+
+
 var Gameboard = render.Gameboard;
