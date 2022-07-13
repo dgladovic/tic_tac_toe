@@ -2,11 +2,12 @@ const render = (() => {
 
     const anounce = document.querySelector('.announcement');
     const new_gam = document.getElementById('new');
+    var count = 0;
 
     new_gam.addEventListener('click',() => render.clear());
 
     const Gameboard = {
-        gameboard: [" ","X"," "," "," "," ","X"," ","X"],
+        gameboard: [" "," "," "," "," "," "," "," "," "],
     };
 
     const clear = () => {
@@ -17,6 +18,54 @@ const render = (() => {
             anounce.style.visibility = 'hidden';
             anounce.style.display = 'none';
         });
+    }
+
+    const gameFlow = (symb) => {
+        
+        var player_sym = "";
+        var cpu = "";
+
+        var cpuwin = "";
+        var plwin = "";
+
+        switch(symb){
+            case 'X':
+                player_sym = 'X';
+                cpu = 'O';
+                break;
+            case 'O':
+                player_sym = 'O';
+                cpu = 'X';
+                break;
+        }
+
+        if(count%2 != 0){
+            cpu_move(cpu);
+            fieldcontent();
+        }        
+
+        if(count >= 5){
+                plwin = winner(player_sym);
+                cpuwin = winner(cpu);
+        
+            // if(plwin || cpuwin == "Pobeda"){
+                
+            // }else{
+                if(count == 9){
+                    return console.log("tie");
+                }
+            // }
+        }   
+    }
+
+    const cpu_move = (cpu) => {
+        count = count + 1;
+        for(let i = 0; i < Gameboard.gameboard.length; i++){
+            if (Gameboard.gameboard[i] === " "){
+                Gameboard.gameboard[i] = cpu;    
+                i = 9;
+            }
+        };
     }
 
     const fieldcontent = () =>{
@@ -32,16 +81,18 @@ const render = (() => {
             e.addEventListener('click', () =>{
                 (e.textContent == " ")? e.textContent = symb : e.textContent = e.textContent;
                 Gameboard.gameboard[i] = e.textContent; 
+                count = count + 1;
+                
             });
         });
         fields.forEach( (e) => {
-            e.addEventListener('click', () => winner(symb));
+            // e.addEventListener('click', () => winner(symb));
+            e.addEventListener('click', () => gameFlow(symb));
         });
         
     };
 
     const winner = (symb) => {   
-        console.log(anounce)
         const win_combos = {    //sve kombinacije za pobedu
             0: [0,1,2],
             1: [0,4,8],
@@ -80,13 +131,13 @@ const render = (() => {
                         anounce.style.display = 'block';
                         break;
                     }
-                    else{
-                        rezultat = "Loss";
-                    } 
+                    // else{
+                    //     rezultat = "Tie";
+                    // } 
                 }
             }
         }
-        return console.log(rezultat);
+        return rezultat;
     };
     return{fieldcontent,logic,winner,clear,Gameboard};
 })();
@@ -101,9 +152,7 @@ const John = Player('Djoka','X');
 
 render.fieldcontent();
 render.logic(John.symbol);
-const flegma = render.winner('X');
-console.log(flegma);
-
-
+// const flegma = render.winner('X');
+// console.log(flegma);
 
 var Gameboard = render.Gameboard;
